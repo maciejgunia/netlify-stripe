@@ -5,7 +5,6 @@ import { products } from "./data/products.json";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-    console.log(products);
     return (
         <Router>
             <Switch>

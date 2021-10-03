@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { createPaymentUrl } from "../environment";
 
 interface ProductData {
     id: string;
@@ -8,15 +9,13 @@ interface ProductData {
 
 export const Product: FC<{ data: ProductData }> = ({ data }) => {
     const buy = () => {
-        fetch("http://localhost:49951/buy", {
+        fetch(`${createPaymentUrl}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ items: [{ price: data.price }] })
-        })
-            .then(console.log)
-            .catch((e) => console.error(e));
+        }).catch((e) => console.error(e));
     };
 
     return (
