@@ -1,6 +1,6 @@
 import "./App.css";
 import { Product } from "./components/Product";
-import { products } from "./data/products.json";
+import { products } from "./data/products";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 

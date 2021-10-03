@@ -23,11 +23,11 @@ export const Product: FC<{ data: ProductData }> = ({ data }) => {
     };
 
     return (
-        <>
+        <div>
             <p>{data.id}</p>
             <p>{data.name}</p>
             <button onClick={createPayment}>buy</button>
             <img src={data.image} alt="" />
-        </>
+        </div>
     );
 };
