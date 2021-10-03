@@ -2,7 +2,7 @@ import { Handler } from "@netlify/functions";
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 import { baseUrl } from "../../src/environment";
 
-const handler: Handler = async (event) => {
+export const handler: Handler = async (event) => {
     if (event.httpMethod === "OPTIONS") {
         return {
             statusCode: 200,
@@ -44,5 +44,3 @@ const handler: Handler = async (event) => {
         body: JSON.stringify({ redirect: session.url })
     };
 };
-
-export { handler };
