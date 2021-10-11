@@ -1,23 +1,28 @@
-import "./App.css";
-import { Product } from "./components/Product";
-import { products } from "./data/products";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Home } from "./views/Home/Home";
+import { Cancel } from "./views/Cancel/Cancel";
+import { Success } from "./views/Success/Success";
+import "./App.scss";
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
     return (
-        <Router>
-            <Switch>
-                <Route path="/success">SUCCESS</Route>
-                <Route path="/cancel">CANCEL</Route>
-                <Route path="/">
-                    HOME
-                    {products.map((product) => (
-                        <Product key={product.id} data={product}></Product>
-                    ))}
-                </Route>
-            </Switch>
-        </Router>
+        <>
+            <Router>
+                <Switch>
+                    <Route path="/success">
+                        <Success></Success>
+                    </Route>
+                    <Route path="/cancel">
+                        <Cancel></Cancel>
+                    </Route>
+                    <Route path="/">
+                        <Home></Home>
+                    </Route>
+                </Switch>
+            </Router>
+            <Footer></Footer>
+        </>
     );
 }
 

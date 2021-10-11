@@ -1,0 +1,19 @@
+.button {
+    padding: 5px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    min-width: 100px;
+    min-height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.button--is-loading {
+    cursor: default;
+}
+
+.button__text {
+    text-align: center;
+}
