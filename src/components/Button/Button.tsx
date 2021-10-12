@@ -4,7 +4,7 @@ import { Spinner } from "../Spinner/Spinner";
 import s from "./Button.module.css";
 
 export const Button: FC<{ priceId: string }> = ({ priceId }) => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const createPayment = () => {
         setIsLoading(true);
