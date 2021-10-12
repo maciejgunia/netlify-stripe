@@ -10,10 +10,10 @@
     cursor: pointer;
 }
 
-.button--is-loading {
+.isLoading {
     cursor: default;
 }
 
-.button__text {
+.text {
     text-align: center;
 }

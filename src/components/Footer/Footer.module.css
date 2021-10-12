@@ -1,10 +1,10 @@
-.footer-socials {
+.wrapper {
     text-align: center;
-    background: #2e2d2b;
+    background: var(--dark);
     padding: 10px 0;
     line-height: 1;
 }
 
-.footer-social-link {
+.link {
     color: white;
 }

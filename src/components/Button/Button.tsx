@@ -1,10 +1,10 @@
 import { FC, useState } from "react";
 import { createPaymentUrl } from "../../environment";
 import { Spinner } from "../Spinner/Spinner";
-import "./Button.scss";
+import s from "./Button.module.css";
 
 export const Button: FC<{ priceId: string }> = ({ priceId }) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const createPayment = () => {
         setIsLoading(true);
@@ -34,12 +34,12 @@ export const Button: FC<{ priceId: string }> = ({ priceId }) => {
 
     return (
         <div
-            className={`button${isLoading ? " button--is-loading" : ""}`}
+            className={`${s.button} ${isLoading ? s.isLoading : ""}`}
             onClick={() => {
                 isLoading || createPayment();
             }}
         >
-            {!isLoading && <span className="button__text">kup teraz</span>}
+            {!isLoading && <span className={s.text}>kup teraz</span>}
             {isLoading && <Spinner></Spinner>}
         </div>
     );
