@@ -1,10 +1,12 @@
 .wrapper {
     text-align: center;
-    background: var(--dark);
+    background: var(--c-dark);
     padding: 10px 0;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .link {
     color: white;
+    margin: 0 5px;
 }

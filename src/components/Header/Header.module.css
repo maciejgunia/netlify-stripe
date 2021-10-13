@@ -1,0 +1,13 @@
+.wrapper {
+    background: var(--c-dark);
+    display: flex;
+    justify-content: center;
+}
+
+.link {
+    display: inline-block;
+}
+
+.logo {
+    width: 45px;
+}
