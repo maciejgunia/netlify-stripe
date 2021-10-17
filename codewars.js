@@ -4,7 +4,7 @@ class Blobservation {
         this.remainingSteps = 0;
         this.height = height;
         this.width = width || height;
-        this.board = JSON.parse(JSON.stringify([...new Array(this.height)].fill([...new Array(this.width).fill(0)])));
+        this.resetBoard();
     }
 
     populate(blobs) {
@@ -13,12 +13,12 @@ class Blobservation {
     }
 
     move(steps = 1) {
-        if (typeof steps !== "number" || steps < 0) {
-            throw new Error("Not a valid number!");
+        if (typeof steps !== "number" || isNaN(steps) || steps < 1) {
+            throw new Error("Not a valid number of steps!");
         }
 
         this.remainingSteps = steps;
-        this.calculateNextPositions();
+        this.calculatePositions();
     }
 
     print_state() {
@@ -37,69 +37,74 @@ class Blobservation {
         if (
             !Array.isArray(blobs) ||
             blobs.some(
-                (blob) => typeof blob.x !== "number" || typeof blob.y !== "number" || typeof blob.size !== "number"
+                (blob) =>
+                    typeof blob.x !== "number" ||
+                    typeof blob.y !== "number" ||
+                    typeof blob.size !== "number" ||
+                    isNaN(blob.x) ||
+                    isNaN(blob.y) ||
+                    isNaN(blob.size) ||
+                    blob.x >= this.height ||
+                    blob.x < 0 ||
+                    blob.y >= this.width ||
+                    blob.y < 0 ||
+                    blob.size > 20 ||
+                    blob.size < 1
             )
         ) {
             throw new Error("Invalid blobs!");
         }
     }
 
-    calculateNextPositions() {
-        let smallestBlob;
-        let blobsToMove;
-        let nextBlobs;
+    calculatePositions() {
+        const smallestBlob = this.blobs.sort((a, b) => a.size - b.size)[0].size;
+        const blobsToMove = this.blobs.filter((blob) => blob.size > smallestBlob);
+        let nextBlobs = blobsToMove.map((blob) => this.pickTarget(blob));
 
-        this.blobs.forEach(
-            (blob) =>
-                (smallestBlob =
-                    blob.size < smallestBlob || typeof smallestBlob === "undefined" ? blob.size : smallestBlob)
-        );
-
-        blobsToMove = this.blobs.filter((blob) => blob.size > smallestBlob);
-        nextBlobs = this.blobs.filter((blob) => blob.size === smallestBlob);
-
-        blobsToMove.forEach((blob, i) => {
-            let targets = this.blobs.filter((target) => blob.x !== target.x || blob.y !== target.y);
-            let minDistance;
-            let maxSize;
-
-            targets = targets.map((target, j) => ({
-                ...target,
-                distance: this.calculateDistance(blob.x, blob.y, target.x, target.y)
-            }));
-
-            // only target smaller size
-            targets = targets.filter((t) => t.size < blob.size);
-
-            // only count closest
-            targets.forEach(
-                (t) =>
-                    (minDistance =
-                        t.distance < minDistance || typeof minDistance === "undefined" ? t.distance : minDistance)
-            );
-            targets = targets.filter((t) => t.distance === minDistance);
-
-            // pick the biggest from the closest
-            targets.forEach((t) => (maxSize = t.size > maxSize || typeof maxSize === "undefined" ? t.size : maxSize));
-            targets = targets.filter((t) => t.size === maxSize);
-
-            // handle equal size blobs in the same distance (clockwise)
-            targets = targets.map((t) => ({ ...t, angle: this.getAngle(blob.x, blob.y, t.x, t.y) }));
-            targets.sort((a, b) => a.angle - b.angle);
-
-            // push new position
-            nextBlobs.push({
-                ...this.getNewPosition(blob.x, blob.y, targets[0].x, targets[0].y),
-                size: blob.size
-            });
-        });
-
+        nextBlobs = [...nextBlobs, ...this.blobs.filter((blob) => blob.size === smallestBlob)];
         this.combineBlobs(nextBlobs);
         this.remainingSteps--;
 
         if (this.remainingSteps > 0) {
-            this.calculateNextPositions();
+            this.calculatePositions();
         }
+    }
+
+    pickTarget(blob) {
+        let targets = this.blobs.filter((target) => blob.x !== target.x || blob.y !== target.y);
+        let minDistance;
+        let maxSize;
+
+        // calculateDistances
+        targets = targets.map((target) => ({
+            ...target,
+            distance: this.calculateDistance(blob.x, blob.y, target.x, target.y)
+        }));
+
+        // only target smaller size
+        targets = targets.filter((t) => t.size < blob.size);
+
+        // only count closest
+        targets.forEach(
+            (t) =>
+                (minDistance =
+                    t.distance < minDistance || typeof minDistance === "undefined" ? t.distance : minDistance)
+        );
+        targets = targets.filter((t) => t.distance === minDistance);
+
+        // pick the biggest from the closest
+        targets.forEach((t) => (maxSize = t.size > maxSize || typeof maxSize === "undefined" ? t.size : maxSize));
+        targets = targets.filter((t) => t.size === maxSize);
+
+        // handle equal size blobs in the same distance (clockwise)
+        targets = targets.map((t) => ({ ...t, angle: this.getAngle(blob.x, blob.y, t.x, t.y) }));
+        targets.sort((a, b) => a.angle - b.angle);
+
+        // push new position
+        return {
+            ...this.getNewPosition(blob.x, blob.y, targets[0].x, targets[0].y),
+            size: blob.size
+        };
     }
 
     calculateDistance(sx, sy, tx, ty) {
@@ -122,9 +127,7 @@ class Blobservation {
 
     combineBlobs(nextBlobs, shouldReplace = true) {
         if (shouldReplace) {
-            this.board = JSON.parse(
-                JSON.stringify([...new Array(this.height)].fill([...new Array(this.width).fill(0)]))
-            );
+            this.resetBoard();
         }
 
         nextBlobs.forEach((b) => (this.board[b.x][b.y] += b.size));
@@ -139,6 +142,10 @@ class Blobservation {
                     .filter((b) => b.size !== 0)
             )
         );
+    }
+
+    resetBoard() {
+        this.board = JSON.parse(JSON.stringify(new Array(this.height).fill(new Array(this.width).fill(0))));
     }
 
     flatten(input) {
@@ -218,8 +225,4 @@ const generationclockwise = [
 const blobs = new Blobservation(10, 8);
 blobs.populate(generation1);
 blobs.move();
-blobs.move(2);
-blobs.move(2);
-console.log(blobs.print_state());
-blobs.populate(generation2);
 console.log(blobs.print_state());
