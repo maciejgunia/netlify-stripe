@@ -4,16 +4,17 @@ class Blobservation {
         this.remainingSteps = 0;
         this.height = height;
         this.width = width || height;
+        this.board = JSON.parse(JSON.stringify([...new Array(this.height)].fill([...new Array(this.width).fill(0)])));
     }
 
     populate(blobs) {
         this.validateBlobs(blobs);
-        this.blobs = blobs;
+        this.combineBlobs(blobs, false);
     }
 
     move(steps = 1) {
-        if (typeof steps !== "number") {
-            throw new Error("Not a number!");
+        if (typeof steps !== "number" || steps < 0) {
+            throw new Error("Not a valid number!");
         }
 
         this.remainingSteps = steps;
@@ -67,8 +68,10 @@ class Blobservation {
                 distance: this.calculateDistance(blob.x, blob.y, target.x, target.y)
             }));
 
+            // only target smaller size
             targets = targets.filter((t) => t.size < blob.size);
 
+            // only count closest
             targets.forEach(
                 (t) =>
                     (minDistance =
@@ -76,18 +79,22 @@ class Blobservation {
             );
             targets = targets.filter((t) => t.distance === minDistance);
 
+            // pick the biggest from the closest
             targets.forEach((t) => (maxSize = t.size > maxSize || typeof maxSize === "undefined" ? t.size : maxSize));
             targets = targets.filter((t) => t.size === maxSize);
 
             // handle equal size blobs in the same distance (clockwise)
+            targets = targets.map((t) => ({ ...t, angle: this.getAngle(blob.x, blob.y, t.x, t.y) }));
+            targets.sort((a, b) => a.angle - b.angle);
 
+            // push new position
             nextBlobs.push({
                 ...this.getNewPosition(blob.x, blob.y, targets[0].x, targets[0].y),
                 size: blob.size
             });
         });
 
-        this.eatBlobs(nextBlobs);
+        this.combineBlobs(nextBlobs);
         this.remainingSteps--;
 
         if (this.remainingSteps > 0) {
@@ -113,12 +120,16 @@ class Blobservation {
         return { x: sx + mx, y: sy + my };
     }
 
-    eatBlobs(nextBlobs) {
-        const board = JSON.parse(JSON.stringify([...new Array(this.height)].fill([...new Array(this.width).fill(0)])));
+    combineBlobs(nextBlobs, shouldReplace = true) {
+        if (shouldReplace) {
+            this.board = JSON.parse(
+                JSON.stringify([...new Array(this.height)].fill([...new Array(this.width).fill(0)]))
+            );
+        }
 
-        nextBlobs.forEach((b) => (board[b.x][b.y] += b.size));
+        nextBlobs.forEach((b) => (this.board[b.x][b.y] += b.size));
         this.blobs = this.flatten(
-            board.map((row, x) =>
+            this.board.map((row, x) =>
                 row
                     .map((size, y) => ({
                         x,
@@ -143,6 +154,17 @@ class Blobservation {
 
         return result;
     }
+
+    getAngle(sx, sy, tx, ty) {
+        const dx = tx - sx;
+        const dy = ty - sy;
+        let theta = Math.atan2(dx, dy);
+
+        theta *= 180 / Math.PI;
+        theta += 90;
+
+        return theta < 0 ? 360 + theta : theta;
+    }
 }
 
 const generation0 = [
@@ -156,6 +178,20 @@ const generation0 = [
     { x: 7, y: 0, size: 3 },
     { x: 7, y: 2, size: 1 }
 ];
+const generation1 = [
+    { x: 3, y: 6, size: 3 },
+    { x: 8, y: 0, size: 2 },
+    { x: 5, y: 3, size: 6 },
+    { x: 1, y: 1, size: 1 },
+    { x: 2, y: 6, size: 2 },
+    { x: 1, y: 5, size: 4 },
+    { x: 7, y: 7, size: 1 },
+    { x: 9, y: 6, size: 3 },
+    { x: 8, y: 3, size: 4 },
+    { x: 5, y: 6, size: 3 },
+    { x: 0, y: 6, size: 1 },
+    { x: 3, y: 2, size: 5 }
+];
 const generation2 = [
     { x: 5, y: 4, size: 3 },
     { x: 8, y: 6, size: 15 },
@@ -166,8 +202,24 @@ const generation2 = [
     { x: 7, y: 2, size: 6 },
     { x: 3, y: 3, size: 2 }
 ];
-const blobs = new Blobservation(10, 8);
 
-blobs.populate(generation2);
+const generationclockwise = [
+    { x: 0, y: 0, size: 1 },
+    { x: 0, y: 1, size: 1 },
+    { x: 0, y: 2, size: 1 },
+    { x: 1, y: 2, size: 1 },
+    { x: 2, y: 2, size: 1 },
+    { x: 2, y: 1, size: 1 },
+    { x: 2, y: 0, size: 1 },
+    { x: 1, y: 0, size: 1 },
+    { x: 1, y: 1, size: 2 }
+];
+
+const blobs = new Blobservation(10, 8);
+blobs.populate(generation1);
+blobs.move();
 blobs.move(2);
+blobs.move(2);
+console.log(blobs.print_state());
+blobs.populate(generation2);
 console.log(blobs.print_state());
