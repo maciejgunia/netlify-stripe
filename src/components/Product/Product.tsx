@@ -11,7 +11,7 @@ export const Product: FC<{ data: ProductData }> = ({ data }) => {
                 <p>
                     {data.name} / {data.price}
                 </p>
-                <Button id={data.id}></Button>
+                <Button id={data.priceId}></Button>
             </div>
         </div>
     );

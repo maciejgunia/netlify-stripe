@@ -11,7 +11,7 @@ export const Cart: FC = () => {
     const products = useContext(ProductContext);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const cartItems = state.map((id) => products.find((product) => product.id === id));
+    const cartItems = state.map((id) => products.find((product) => product.priceId === id));
 
     const createPayment = () => {
         setIsLoading(true);
@@ -53,7 +53,7 @@ export const Cart: FC = () => {
                         {cartItems.map(
                             (product) =>
                                 product && (
-                                    <li key={product.id} className={s.item}>
+                                    <li key={product.priceId} className={s.item}>
                                         <img className={s.image} src={`${product.images[0]}?w=50`} alt="" />
                                         <span>{product.name}</span>
                                         <span>{product.price}</span>

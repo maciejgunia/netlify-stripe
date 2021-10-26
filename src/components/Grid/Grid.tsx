@@ -9,7 +9,7 @@ export const Grid: FC = () => {
     return (
         <div className={s.grid}>
             {products.map((product) => (
-                <Product key={product.id} data={product}></Product>
+                <Product key={product.priceId} data={product}></Product>
             ))}
         </div>
     );
