@@ -61,7 +61,9 @@ export const Cart: FC = () => {
                                             icon={faTrash}
                                             size="lg"
                                             className={s.removeButton}
-                                            onClick={() => dispatch({ type: CartActionType.Remove, id: product.id })}
+                                            onClick={() =>
+                                                dispatch({ type: CartActionType.Remove, id: product.priceId })
+                                            }
                                         />
                                     </li>
                                 )
