@@ -4,9 +4,17 @@ import { Cancel } from "./views/Cancel/Cancel";
 import { Success } from "./views/Success/Success";
 import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
-import React, { FC, useReducer } from "react";
+import React, { FC, useEffect, useReducer, useState } from "react";
 import { Cart } from "./components/Cart/Cart";
-import { ProductData, products } from "./data/products";
+import { getProductsUrl } from "./environment";
+
+export interface ProductData {
+    id: string;
+    name: string;
+    price: string;
+    priceId: string;
+    images: string[];
+}
 
 export enum CartActionType {
     Add = "add",
@@ -34,10 +42,26 @@ export const CartContext = React.createContext<{ state: string[]; dispatch: (act
     dispatch: () => {}
 });
 
-export const ProductContext = React.createContext<ProductData[]>(products);
+export const ProductContext = React.createContext<ProductData[]>([]);
 
 export const App: FC = () => {
     const [state, dispatch] = useReducer(reducer, []);
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch(getProductsUrl)
+            .then((res) => {
+                if (res.status !== 200) {
+                    throw new Error(`Request failed with status ${res.status}`);
+                }
+
+                return res.json();
+            })
+            .then((products) => {
+                setProducts(products);
+            })
+            .catch((e) => console.error(e));
+    }, []);
 
     return (
         <CartContext.Provider value={{ state, dispatch }}>

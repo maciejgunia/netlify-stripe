@@ -1,7 +1,7 @@
 .wrapper {
     padding: 10px 20px 20px;
     position: absolute;
-    height: 100vh;
+    height: calc(100vh - 30px);
     width: 300px;
     top: 0;
     right: 0;

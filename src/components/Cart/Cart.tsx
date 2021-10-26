@@ -40,7 +40,7 @@ export const Cart: FC = () => {
     };
 
     return (
-        <div className={isDrawerOpen ? s.open : ""}>
+        <div className={isDrawerOpen ? s.open : "closed"}>
             <div className={s.backdrop} onClick={() => setDrawerOpen(false)}></div>
             <div className={s.wrapper}>
                 <span className={s.toggle} onClick={() => setDrawerOpen(!isDrawerOpen)}>
@@ -54,7 +54,7 @@ export const Cart: FC = () => {
                             (product) =>
                                 product && (
                                     <li key={product.id} className={s.item}>
-                                        <img className={s.image} src={product.image} alt="" />
+                                        <img className={s.image} src={`${product.images[0]}?w=50`} alt="" />
                                         <span>{product.name}</span>
                                         <span>{product.price}</span>
                                         <FontAwesomeIcon
