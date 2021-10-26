@@ -1,9 +1,11 @@
-import { FC } from "react";
-import { ProductData } from "../../data/products";
+import { FC, useContext } from "react";
+import { ProductContext } from "../../App";
 import { Product } from "../Product/Product";
 import s from "./Grid.module.css";
 
-export const Grid: FC<{ products: ProductData[] }> = ({ products }) => {
+export const Grid: FC = () => {
+    const products = useContext(ProductContext);
+
     return (
         <div className={s.grid}>
             {products.map((product) => (

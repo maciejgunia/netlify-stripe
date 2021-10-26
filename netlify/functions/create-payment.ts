@@ -1,6 +1,6 @@
+import { baseUrl } from "../../src/environment";
 import { Handler } from "@netlify/functions";
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-import { baseUrl } from "../../src/environment";
 
 export const handler: Handler = async (event) => {
     if (event.httpMethod === "OPTIONS") {
@@ -14,20 +14,21 @@ export const handler: Handler = async (event) => {
         };
     }
 
-    let price: string;
+    let items: { priceId: string }[];
     let session;
 
     try {
-        price = JSON.parse(event.body).items[0].price;
+        items = JSON.parse(event.body).items;
         session = await stripe.checkout.sessions.create({
-            line_items: [
-                {
-                    price: price,
-                    quantity: 1
-                }
-            ],
+            line_items: items.map((item) => ({
+                price: item.priceId,
+                quantity: 1
+            })),
             shipping_rates: ["shr_1JgUVJHZVIGpqCDJVpsyQ5Cr"],
-            payment_method_types: ["card"],
+            payment_method_types: ["card", "p24"],
+            shipping_address_collection: {
+                allowed_countries: ["PL"]
+            },
             mode: "payment",
             success_url: `${baseUrl}/success`,
             cancel_url: `${baseUrl}/cancel`

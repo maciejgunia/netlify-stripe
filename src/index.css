@@ -1,7 +1,7 @@
 :root {
-    --c-dark: #2e2d2b;
+    --c-text: #2e2d2b;
+    --c-background: #ffffff;
     --c-accent: #ceb0ae;
-    --c-light: #ffffff;
 }
 
 html,
@@ -14,15 +14,16 @@ body,
 
 body {
     margin: 0;
+    color: var(--c-text);
     font-family: "Lato", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--c-dark);
+    background-color: var(--c-text);
 }
 
 #content {
     flex: 1 0 auto;
-    background-color: var(--c-light);
+    background-color: var(--c-background);
 }
 
 .container {

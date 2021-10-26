@@ -1,6 +1,6 @@
 .wrapper {
     text-align: center;
-    background: var(--c-dark);
+    background: var(--c-text);
     padding: 10px 0;
     line-height: 1;
     flex-shrink: 0;

@@ -1,17 +1,25 @@
 .button {
     padding: 5px;
-    border: 1px solid #333333;
+    border: 1px solid var(--c-text);
+    background: var(--c-background);
     border-radius: 5px;
     min-width: 100px;
     min-height: 20px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     cursor: pointer;
+    transition: color 200ms, background 200ms;
 }
 
-.isLoading {
+.button:hover {
+    background: var(--c-text);
+    color: var(--c-background);
+}
+
+.isInCart {
+    transition: none;
     cursor: default;
+    pointer-events: none;
 }
 
 .text {
