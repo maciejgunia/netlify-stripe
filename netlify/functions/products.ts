@@ -28,6 +28,7 @@ export const handler: Handler = async () => {
                 name: product.name,
                 priceId: price.id,
                 price: `${price.unit_amount / 100} ${price.currency.toUpperCase()}`,
+                nickname: price.nickname,
                 images: product.images
             });
         });

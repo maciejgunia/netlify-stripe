@@ -56,6 +56,7 @@ export const Cart: FC = () => {
                                     <li key={product.priceId} className={s.item}>
                                         <img className={s.image} src={`${product.images[0]}?w=50`} alt="" />
                                         <span>{product.name}</span>
+                                        <span>{product.nickname}</span>
                                         <span>{product.price}</span>
                                         <FontAwesomeIcon
                                             icon={faTrash}

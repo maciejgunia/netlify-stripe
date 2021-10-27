@@ -7,12 +7,14 @@ import { Header } from "./components/Header/Header";
 import React, { FC, useEffect, useReducer, useState } from "react";
 import { Cart } from "./components/Cart/Cart";
 import { getProductsUrl } from "./environment";
+import { Product } from "./views/Product/Product";
 
 export interface ProductData {
     id: string;
     name: string;
     price: string;
     priceId: string;
+    nickname: string;
     images: string[];
 }
 
@@ -37,16 +39,25 @@ const reducer = (state: string[], { type, id }: CartAction) => {
     }
 };
 
+const CART_STORAGE_LABEL = "cart";
+
+const initialCartValue = JSON.parse(localStorage.getItem(CART_STORAGE_LABEL) || "[]");
+
 export const CartContext = React.createContext<{ state: string[]; dispatch: (action: CartAction) => void }>({
-    state: [],
+    state: initialCartValue,
     dispatch: () => {}
 });
 
 export const ProductContext = React.createContext<ProductData[]>([]);
 
 export const App: FC = () => {
-    const [state, dispatch] = useReducer(reducer, []);
+    const [state, dispatch] = useReducer(reducer, initialCartValue);
     const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        localStorage.setItem(CART_STORAGE_LABEL, JSON.stringify(state));
+    }, [state]);
 
     useEffect(() => {
         fetch(getProductsUrl)
@@ -59,8 +70,12 @@ export const App: FC = () => {
             })
             .then((products) => {
                 setProducts(products);
+                setIsLoading(false);
             })
-            .catch((e) => console.error(e));
+            .catch((e) => {
+                setIsLoading(false);
+                console.error(e);
+            });
     }, []);
 
     return (
@@ -69,17 +84,22 @@ export const App: FC = () => {
                 <Router>
                     <div id="content">
                         <Header></Header>
-                        <Switch>
-                            <Route path="/success">
-                                <Success></Success>
-                            </Route>
-                            <Route path="/cancel">
-                                <Cancel></Cancel>
-                            </Route>
-                            <Route path="/">
-                                <Home></Home>
-                            </Route>
-                        </Switch>
+                        {!isLoading && (
+                            <Switch>
+                                <Route path="/product/:id">
+                                    <Product></Product>
+                                </Route>
+                                <Route path="/success">
+                                    <Success></Success>
+                                </Route>
+                                <Route path="/cancel">
+                                    <Cancel></Cancel>
+                                </Route>
+                                <Route path="/">
+                                    <Home></Home>
+                                </Route>
+                            </Switch>
+                        )}
                     </div>
                     <Footer></Footer>
                     <Cart></Cart>
