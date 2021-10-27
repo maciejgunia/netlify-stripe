@@ -90,16 +90,12 @@ export const Cart: FC = () => {
                         )}
                     </ul>
                 )}
-                {cartItems.length > 0 && (
-                    <>
-                        <div id="easypack-widget" className={s.parcelWidget}></div>
-                        {deliveryPoint.length > 0 && (
-                            <button onClick={createPayment} className={s.payButton}>
-                                {!isLoading && <span className={s.text}>zapłać</span>}
-                                {isLoading && <Spinner></Spinner>}
-                            </button>
-                        )}
-                    </>
+                <div id="easypack-widget" style={{ display: cartItems.length === 0 ? "none" : "block" }}></div>
+                {cartItems.length > 0 && deliveryPoint.length > 0 && (
+                    <button onClick={createPayment} className={s.payButton}>
+                        {!isLoading && <span className={s.text}>zapłać</span>}
+                        {isLoading && <Spinner></Spinner>}
+                    </button>
                 )}
             </div>
         </div>
