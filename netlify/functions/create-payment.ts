@@ -15,10 +15,12 @@ export const handler: Handler = async (event) => {
     }
 
     let items: { priceId: string }[];
+    let deliveryPoint: string;
     let session;
 
     try {
         items = JSON.parse(event.body).items;
+        deliveryPoint = JSON.parse(event.body).deliveryPoint;
         session = await stripe.checkout.sessions.create({
             line_items: items.map((item) => ({
                 price: item.priceId,
@@ -31,7 +33,10 @@ export const handler: Handler = async (event) => {
             },
             mode: "payment",
             success_url: `${baseUrl}/success`,
-            cancel_url: `${baseUrl}/cancel`
+            cancel_url: `${baseUrl}/cancel`,
+            payment_intent_data: {
+                metadata: { paczkomat: deliveryPoint }
+            }
         });
     } catch (e) {
         return {

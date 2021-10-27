@@ -6,9 +6,9 @@ import s from "./Product.module.css";
 
 export const Product: FC = () => {
     const products = useContext(ProductContext);
-    const { id } = useParams<{ id: string }>();
-    const product = products.find((p) => p.id === id);
-    const offers = products.filter((p) => p.id === id);
+    const { slug } = useParams<{ slug: string }>();
+    const product = products.find((p) => p.slug === slug);
+    const offers = products.filter((p) => p.slug === slug);
 
     return (
         <div className={`container ${s.wrapper}`}>

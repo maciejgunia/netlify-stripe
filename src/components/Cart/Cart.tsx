@@ -1,11 +1,17 @@
 import { faShoppingCart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { createPaymentUrl } from "../../environment";
 import { CartActionType, CartContext } from "../../helpers/cart";
 import { ProductContext } from "../../helpers/product";
 import { Spinner } from "../Spinner/Spinner";
 import s from "./Cart.module.css";
+
+declare global {
+    interface Window {
+        easyPack: any;
+    }
+}
 
 export const Cart: FC = () => {
     const { state, dispatch } = useContext(CartContext);
@@ -13,6 +19,26 @@ export const Cart: FC = () => {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const cartItems = state.map((id) => products.find((product) => product.priceId === id));
+    const [deliveryPoint, setDeliveryPoint] = useState("");
+
+    useEffect(() => {
+        window.easyPack.init({
+            mapType: "osm",
+            searchType: "osm",
+            points: {
+                types: ["parcel_locker"]
+            },
+            map: {
+                useGeolocation: true,
+                initialTypes: ["parcel_locker"]
+            }
+        });
+        window.onload = function () {
+            window.easyPack.dropdownWidget("easypack-widget", function (point: any) {
+                setDeliveryPoint(point.name);
+            });
+        };
+    }, []);
 
     const createPayment = () => {
         setIsLoading(true);
@@ -21,12 +47,14 @@ export const Cart: FC = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ items: cartItems })
+            body: JSON.stringify({ items: cartItems, deliveryPoint })
         })
             .then(async (res) => {
                 return res.json();
             })
             .then(({ error, redirect }) => {
+                setIsLoading(false);
+
                 if (typeof error !== "undefined") {
                     throw error;
                 }
@@ -43,10 +71,10 @@ export const Cart: FC = () => {
     return (
         <div className={isDrawerOpen ? s.open : "closed"}>
             <div className={s.backdrop} onClick={() => setDrawerOpen(false)}></div>
+            <span className={s.toggle} onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                <FontAwesomeIcon icon={faShoppingCart} size="lg" /> {state.length > 0 && `(${state.length})`}
+            </span>
             <div className={s.wrapper}>
-                <span className={s.toggle} onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                    <FontAwesomeIcon icon={faShoppingCart} size="lg" /> {state.length > 0 && `(${state.length})`}
-                </span>
                 <h2 className={s.header}>Koszyk</h2>
                 {cartItems.length === 0 && <p>Brak produktów w koszyku</p>}
                 {cartItems.length > 0 && (
@@ -73,10 +101,15 @@ export const Cart: FC = () => {
                     </ul>
                 )}
                 {cartItems.length > 0 && (
-                    <button onClick={createPayment} className={s.payButton}>
-                        {!isLoading && <span className={s.text}>zapłać</span>}
-                        {isLoading && <Spinner></Spinner>}
-                    </button>
+                    <>
+                        <div id="easypack-widget" className={s.parcelWidget}></div>
+                        {deliveryPoint.length > 0 && (
+                            <button onClick={createPayment} className={s.payButton}>
+                                {!isLoading && <span className={s.text}>zapłać</span>}
+                                {isLoading && <Spinner></Spinner>}
+                            </button>
+                        )}
+                    </>
                 )}
             </div>
         </div>

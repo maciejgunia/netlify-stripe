@@ -29,7 +29,11 @@ export const handler: Handler = async () => {
                 priceId: price.id,
                 price: `${price.unit_amount / 100} ${price.currency.toUpperCase()}`,
                 nickname: price.nickname,
-                images: product.images
+                images: product.images,
+                slug: product.name
+                    .normalize("NFD")
+                    .replace(/\p{Diacritic}/gu, "")
+                    .toLowerCase()
             });
         });
     } catch (e) {

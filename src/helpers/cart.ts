@@ -2,25 +2,32 @@ import React from "react";
 
 export enum CartActionType {
     Add = "add",
-    Remove = "remove"
+    Remove = "remove",
+    Clear = "clear"
 }
 
-interface CartAction {
+export interface CartAction {
     type: CartActionType;
-    id: string;
+    id?: string;
 }
 
 export const CART_STORAGE_LABEL = "cart";
 export const initialCartValue = JSON.parse(localStorage.getItem(CART_STORAGE_LABEL) || "[]");
 
-export const reducer = (state: string[], { type, id }: CartAction) => {
+export const reducer = (state: string[], { type, id }: CartAction): string[] => {
+    if (type === CartActionType.Add && typeof id === "undefined") {
+        throw new Error("You need to provide an id");
+    }
+
     switch (type) {
         case CartActionType.Add:
-            return Array.from(new Set([...state, id]));
+            return Array.from(new Set([...state, id])) as string[];
         case CartActionType.Remove:
             return state.filter((item) => item !== id);
+        case CartActionType.Clear:
+            return [];
         default:
-            throw new Error();
+            throw new Error(`Unsupported Action type ${type}`);
     }
 };
 

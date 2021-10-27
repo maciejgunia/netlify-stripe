@@ -34,3 +34,8 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
+
+.easypack-widget {
+    height: auto;
+    margin-bottom: 20px;
+}

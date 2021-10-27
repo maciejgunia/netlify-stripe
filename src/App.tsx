@@ -4,16 +4,16 @@ import { Cancel } from "./views/Cancel/Cancel";
 import { Success } from "./views/Success/Success";
 import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
-import { FC, useEffect, useReducer, useState } from "react";
+import { FC, Reducer, useEffect, useReducer, useState } from "react";
 import { Cart } from "./components/Cart/Cart";
 import { getProductsUrl } from "./environment";
 import { Product } from "./views/Product/Product";
-import { CartContext, CART_STORAGE_LABEL, initialCartValue, reducer } from "./helpers/cart";
-import { ProductContext } from "./helpers/product";
+import { CartAction, CartContext, CART_STORAGE_LABEL, initialCartValue, reducer } from "./helpers/cart";
+import { ProductContext, ProductData } from "./helpers/product";
 
 export const App: FC = () => {
-    const [cartState, dispatch] = useReducer(reducer, initialCartValue);
-    const [products, setProducts] = useState([]);
+    const [cartState, dispatch] = useReducer<Reducer<string[], CartAction>>(reducer, initialCartValue);
+    const [products, setProducts] = useState<ProductData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export const App: FC = () => {
                         <Header></Header>
                         {!isLoading && (
                             <Switch>
-                                <Route path="/product/:id">
+                                <Route path="/product/:slug">
                                     <Product></Product>
                                 </Route>
                                 <Route path="/success">
