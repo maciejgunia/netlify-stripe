@@ -1,18 +1,24 @@
 .wrapper {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    grid-template-rows: 1fr;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .images {
-    grid-area: 1 / 1 / 1 / 2;
+    flex-grow: 1;
 }
 
 .image {
     width: 100%;
 }
 
-.description {
-    grid-area: 1 / 2 / 1 / 2;
+@media (min-width: 800px) {
+    .wrapper {
+        flex-direction: row;
+    }
+
+    .description {
+        width: 250px;
+        margin-left: 20px;
+        flex-shrink: 0;
+    }
 }

@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from "react";
-import { ProductContext, ProductData } from "../../App";
+import { ProductContext, ProductData } from "../../helpers/product";
 import { ProductTile } from "../ProductTile/ProductTile";
 import s from "./Grid.module.css";
 

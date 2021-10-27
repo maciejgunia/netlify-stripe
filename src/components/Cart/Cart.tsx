@@ -1,8 +1,9 @@
 import { faShoppingCart, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useContext, useState } from "react";
-import { CartActionType, CartContext, ProductContext } from "../../App";
 import { createPaymentUrl } from "../../environment";
+import { CartActionType, CartContext } from "../../helpers/cart";
+import { ProductContext } from "../../helpers/product";
 import { Spinner } from "../Spinner/Spinner";
 import s from "./Cart.module.css";
 

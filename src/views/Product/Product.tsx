@@ -1,7 +1,7 @@
 import { FC, useContext } from "react";
 import { useParams } from "react-router";
-import { ProductContext } from "../../App";
 import { Button } from "../../components/Button/Button";
+import { ProductContext } from "../../helpers/product";
 import s from "./Product.module.css";
 
 export const Product: FC = () => {
@@ -13,7 +13,7 @@ export const Product: FC = () => {
     return (
         <div className={`container ${s.wrapper}`}>
             <div className={s.images}>
-                <img className={s.image} src={product?.images[0]} alt="" />
+                <img className={s.image} src={`${product?.images[0]}?w=580`} alt="" />
             </div>
             <div className={s.description}>
                 <h2>{product?.name}</h2>

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { ProductData } from "../../App";
+import { ProductData } from "../../helpers/product";
 import s from "./ProductTile.module.css";
 
 export const ProductTile: FC<{ data: ProductData }> = ({ data }) => {

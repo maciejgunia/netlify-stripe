@@ -2,6 +2,8 @@
     --c-text: #2e2d2b;
     --c-background: #ffffff;
     --c-accent: #ceb0ae;
+    --b-tablet: 500px;
+    --b-desktop: 800px;
 }
 
 html,

@@ -4,60 +4,21 @@ import { Cancel } from "./views/Cancel/Cancel";
 import { Success } from "./views/Success/Success";
 import { Footer } from "./components/Footer/Footer";
 import { Header } from "./components/Header/Header";
-import React, { FC, useEffect, useReducer, useState } from "react";
+import { FC, useEffect, useReducer, useState } from "react";
 import { Cart } from "./components/Cart/Cart";
 import { getProductsUrl } from "./environment";
 import { Product } from "./views/Product/Product";
-
-export interface ProductData {
-    id: string;
-    name: string;
-    price: string;
-    priceId: string;
-    nickname: string;
-    images: string[];
-}
-
-export enum CartActionType {
-    Add = "add",
-    Remove = "remove"
-}
-
-type CartAction = {
-    type: CartActionType;
-    id: string;
-};
-
-const reducer = (state: string[], { type, id }: CartAction) => {
-    switch (type) {
-        case CartActionType.Add:
-            return Array.from(new Set([...state, id]));
-        case CartActionType.Remove:
-            return state.filter((item) => item !== id);
-        default:
-            throw new Error();
-    }
-};
-
-const CART_STORAGE_LABEL = "cart";
-
-const initialCartValue = JSON.parse(localStorage.getItem(CART_STORAGE_LABEL) || "[]");
-
-export const CartContext = React.createContext<{ state: string[]; dispatch: (action: CartAction) => void }>({
-    state: initialCartValue,
-    dispatch: () => {}
-});
-
-export const ProductContext = React.createContext<ProductData[]>([]);
+import { CartContext, CART_STORAGE_LABEL, initialCartValue, reducer } from "./helpers/cart";
+import { ProductContext } from "./helpers/product";
 
 export const App: FC = () => {
-    const [state, dispatch] = useReducer(reducer, initialCartValue);
+    const [cartState, dispatch] = useReducer(reducer, initialCartValue);
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        localStorage.setItem(CART_STORAGE_LABEL, JSON.stringify(state));
-    }, [state]);
+        localStorage.setItem(CART_STORAGE_LABEL, JSON.stringify(cartState));
+    }, [cartState]);
 
     useEffect(() => {
         fetch(getProductsUrl)
@@ -79,7 +40,7 @@ export const App: FC = () => {
     }, []);
 
     return (
-        <CartContext.Provider value={{ state, dispatch }}>
+        <CartContext.Provider value={{ state: cartState, dispatch }}>
             <ProductContext.Provider value={products}>
                 <Router>
                     <div id="content">

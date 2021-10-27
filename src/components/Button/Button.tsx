@@ -1,7 +1,7 @@
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useContext } from "react";
-import { CartActionType, CartContext } from "../../App";
+import { CartActionType, CartContext } from "../../helpers/cart";
 import s from "./Button.module.css";
 
 export const Button: FC<{ id: string }> = ({ id }) => {
