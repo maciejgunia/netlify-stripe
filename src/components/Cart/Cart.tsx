@@ -22,17 +22,7 @@ export const Cart: FC = () => {
     const [deliveryPoint, setDeliveryPoint] = useState("");
 
     useEffect(() => {
-        window.easyPack.init({
-            mapType: "osm",
-            searchType: "osm",
-            points: {
-                types: ["parcel_locker"]
-            },
-            map: {
-                useGeolocation: true,
-                initialTypes: ["parcel_locker"]
-            }
-        });
+        window.easyPack.init({});
         window.onload = function () {
             window.easyPack.dropdownWidget("easypack-widget", function (point: any) {
                 setDeliveryPoint(point.name);
