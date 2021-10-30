@@ -45,6 +45,8 @@ export const handler: Handler = async () => {
                         nickname: price.nickname,
                         images: product.images,
                         slug: product.name
+                            .replace(/\s/g, "-")
+                            .replace(/"/g, "")
                             .normalize("NFD")
                             .replace(/\p{Diacritic}/gu, "")
                             .toLowerCase()

@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { useParams } from "react-router";
+import { Redirect, useLocation, useParams } from "react-router";
 import { Button } from "../../components/Button/Button";
 import { ProductContext } from "../../helpers/product";
 import s from "./Product.module.css";
@@ -10,7 +10,7 @@ export const Product: FC = () => {
     const product = products.find((p) => p.slug === slug);
     const offers = products.filter((p) => p.slug === slug);
 
-    return (
+    return product ? (
         <div className={`container ${s.wrapper}`}>
             <div className={s.images}>
                 <img className={s.image} src={`${product?.images[0]}?w=580`} alt="" />
@@ -27,5 +27,7 @@ export const Product: FC = () => {
                 ))}
             </div>
         </div>
+    ) : (
+        <Redirect to="/404"></Redirect>
     );
 };

@@ -59,6 +59,7 @@ export const App: FC = () => {
                                 <Route path="/cancel">
                                     <Cancel></Cancel>
                                 </Route>
+                                <Route path="404" render={() => <>Not found</>} />
                                 <Route path="*" render={() => <>Not found</>} />
                             </Switch>
                         )}
