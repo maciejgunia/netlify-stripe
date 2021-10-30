@@ -22,8 +22,8 @@ export const Cart: FC = () => {
     const [deliveryPoint, setDeliveryPoint] = useState("");
 
     useEffect(() => {
-        window.easyPack.init({});
         window.onload = function () {
+            window.easyPack.init({});
             window.easyPack.dropdownWidget("easypack-widget", function (point: any) {
                 setDeliveryPoint(point.name);
             });
