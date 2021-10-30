@@ -3,7 +3,7 @@ import { Handler } from "@netlify/functions";
 const isDev = process.env.CONTEXT === "dev";
 let stripe;
 
-if (!isDev) {
+if (isDev) {
     stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 } else {
     stripe = require("stripe")(process.env.STRIPE_SECRET_LIVE);
