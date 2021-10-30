@@ -6,7 +6,7 @@ let stripe;
 
 if (context === "production") {
     stripe = require("stripe")(process.env.STRIPE_SECRET);
-} else if (context === "deploy-preview" || context === "branch-deploy") {
+} else {
     stripe = require("stripe")(process.env.STRIPE_SECRET_STAGING);
 }
 
