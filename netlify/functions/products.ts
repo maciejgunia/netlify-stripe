@@ -3,7 +3,7 @@ import { Handler } from "@netlify/functions";
 const context = process.env.CONTEXT;
 let stripe;
 
-console.log(context);
+console.log(process.env);
 
 if (context === "production") {
     stripe = require("stripe")(process.env.STRIPE_SECRET);
