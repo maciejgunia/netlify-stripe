@@ -1,13 +1,13 @@
 import { baseUrl } from "../../src/environment";
 import { Handler } from "@netlify/functions";
 
-const context = process.env.CONTEXT;
+const isDev = process.env.CONTEXT === "dev";
 let stripe;
 
-if (context === "production") {
-    stripe = require("stripe")(process.env.STRIPE_SECRET);
+if (isDev) {
+    stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 } else {
-    stripe = require("stripe")(process.env.STRIPE_SECRET_STAGING);
+    stripe = require("stripe")(process.env.STRIPE_SECRET_LIVE);
 }
 
 export const handler: Handler = async (event) => {

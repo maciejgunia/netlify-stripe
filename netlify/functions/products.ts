@@ -1,14 +1,12 @@
 import { Handler } from "@netlify/functions";
 
-const context = process.env.CONTEXT;
+const isDev = process.env.CONTEXT === "dev";
 let stripe;
 
-console.log(process.env);
-
-if (context === "production") {
-    stripe = require("stripe")(process.env.STRIPE_SECRET);
+if (isDev) {
+    stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 } else {
-    stripe = require("stripe")(process.env.STRIPE_SECRET_STAGING);
+    stripe = require("stripe")(process.env.STRIPE_SECRET_LIVE);
 }
 
 const delay = async (index) => {
@@ -17,7 +15,7 @@ const delay = async (index) => {
             () => {
                 resolve();
             },
-            context === "production" ? 0 : 10 * index
+            isDev ? 10 * index : 0
         )
     );
 };
