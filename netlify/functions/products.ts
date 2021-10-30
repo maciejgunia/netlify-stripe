@@ -1,6 +1,13 @@
 import { Handler } from "@netlify/functions";
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const context = process.env.CONTEXT;
+let stripe;
+
+if (context === "production") {
+    stripe = require("stripe")(process.env.STRIPE_SECRET);
+} else {
+    stripe = require("stripe")(process.env.STRIPE_SECRET_STAGING);
+}
 
 export const handler: Handler = async () => {
     let products;
