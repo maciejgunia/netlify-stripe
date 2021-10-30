@@ -47,6 +47,9 @@ export const App: FC = () => {
                         <Header></Header>
                         {!isLoading && (
                             <Switch>
+                                <Route exact path="/">
+                                    <Home></Home>
+                                </Route>
                                 <Route path="/product/:slug">
                                     <Product></Product>
                                 </Route>
@@ -56,9 +59,7 @@ export const App: FC = () => {
                                 <Route path="/cancel">
                                     <Cancel></Cancel>
                                 </Route>
-                                <Route path="/">
-                                    <Home></Home>
-                                </Route>
+                                <Route path="*" render={() => <>Not found</>} />
                             </Switch>
                         )}
                     </div>
