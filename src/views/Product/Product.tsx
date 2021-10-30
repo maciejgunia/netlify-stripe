@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { Redirect, useLocation, useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import { Button } from "../../components/Button/Button";
 import { ProductContext } from "../../helpers/product";
 import s from "./Product.module.css";
