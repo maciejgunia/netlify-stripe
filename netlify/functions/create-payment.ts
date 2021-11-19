@@ -1,9 +1,15 @@
-import { baseUrl } from "../../src/environment";
 import { Handler } from "@netlify/functions";
 
 const isDev = process.env.CONTEXT === "dev";
+const baseUrl = isDev
+    ? "http://localhost:8888"
+    : process.env.CONTEXT === "production"
+    ? process.env.URL
+    : process.env.DEPLOY_PRIME_URL;
 let stripe;
 let shipping;
+
+console.log(process.env.CONTEXT === "production", process.env.URL, process.env.DEPLOY_PRIME_URL);
 
 if (isDev) {
     stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
