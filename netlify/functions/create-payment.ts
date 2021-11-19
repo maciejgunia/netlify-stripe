@@ -3,11 +3,14 @@ import { Handler } from "@netlify/functions";
 
 const isDev = process.env.CONTEXT === "dev";
 let stripe;
+let shipping;
 
 if (isDev) {
     stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
+    shipping = "shr_1JgUVJHZVIGpqCDJVpsyQ5Cr";
 } else {
     stripe = require("stripe")(process.env.STRIPE_SECRET_LIVE);
+    shipping = "shr_1JqjxTKDt2gO4ctBZWxzyru9";
 }
 
 export const handler: Handler = async (event) => {
@@ -34,7 +37,7 @@ export const handler: Handler = async (event) => {
                 price: item.priceId,
                 quantity: 1
             })),
-            shipping_rates: ["shr_1JgUVJHZVIGpqCDJVpsyQ5Cr"],
+            shipping_rates: [shipping],
             payment_method_types: ["card", "p24"],
             phone_number_collection: {
                 enabled: true
