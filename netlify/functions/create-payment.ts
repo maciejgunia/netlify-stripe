@@ -52,7 +52,7 @@ export const handler: Handler = async (event) => {
     } catch (e) {
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: e })
+            body: JSON.stringify({ error: e.message })
         };
     }
 

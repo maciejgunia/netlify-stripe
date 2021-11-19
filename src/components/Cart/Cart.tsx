@@ -18,7 +18,9 @@ export const Cart: FC = () => {
     const products = useContext(ProductContext);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const cartItems = state.map((id) => products.find((product) => product.priceId === id));
+    const cartItems = state
+        .map((id) => products.find((product) => product.priceId === id))
+        .filter((product) => product !== undefined);
     const [deliveryPoint, setDeliveryPoint] = useState("");
 
     useEffect(() => {
