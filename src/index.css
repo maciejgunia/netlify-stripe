@@ -2,6 +2,7 @@
     --c-text: #2e2d2b;
     --c-background: #ffffff;
     --c-accent: #ceb0ae;
+    --c-complementary: #68796e;
     --b-tablet: 500px;
     --b-desktop: 800px;
 }
@@ -18,7 +19,7 @@ body {
     overflow-x: hidden;
     margin: 0;
     color: var(--c-text);
-    font-family: "Lato", sans-serif;
+    font-family: "Montserrat", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--c-text);

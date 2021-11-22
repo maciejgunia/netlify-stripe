@@ -25,7 +25,8 @@ export const handler: Handler = async () => {
 
     try {
         const products = await stripe.products.list({
-            limit: 100
+            limit: 100,
+            active: true
         });
 
         productsWithPrices = await Promise.all(
@@ -33,7 +34,8 @@ export const handler: Handler = async () => {
                 await delay(index);
                 const prices = await stripe.prices.list({
                     product: product.id,
-                    limit: 10
+                    limit: 10,
+                    active: true
                 });
 
                 return prices.data.map((price) => {
