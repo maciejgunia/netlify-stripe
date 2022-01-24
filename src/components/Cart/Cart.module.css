@@ -70,6 +70,12 @@
     text-transform: uppercase;
 }
 
+.payButton[disabled] {
+    pointer-events: none;
+    pointer: default;
+    opacity: 0.5;
+}
+
 .backdrop {
     position: fixed;
     width: 100vw;

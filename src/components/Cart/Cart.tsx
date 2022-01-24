@@ -93,12 +93,14 @@ export const Cart: FC = () => {
                         )}
                     </ul>
                 )}
+                <p>Dane do Paczkomatu InPost:</p>
                 <input
                     className={s.phoneInput}
                     type="text"
                     name="phone"
                     placeholder="Podaj numer telefonu"
                     value={phone}
+                    style={{ display: items.length === 0 ? "none" : "block" }}
                     onChange={(e) => {
                         if (!/[^0-9\s-]/.test(e.target.value)) {
                             setPhone(e.target.value);
@@ -110,12 +112,17 @@ export const Cart: FC = () => {
                     }}
                 />
                 <div id="easypack-widget" style={{ display: items.length === 0 ? "none" : "block" }}></div>
-                {items.length > 0 && deliveryPoint.length > 0 && phone.replace(/[\s-]/g, "").length >= 9 && (
-                    <button onClick={createPayment} className={s.payButton}>
-                        {!isLoading && <span className={s.text}>zapłać</span>}
-                        {isLoading && <Spinner></Spinner>}
-                    </button>
-                )}
+                <button
+                    onClick={createPayment}
+                    className={s.payButton}
+                    style={{ display: items.length === 0 ? "none" : "block" }}
+                    disabled={
+                        items.length === 0 || deliveryPoint.length === 0 || phone.replace(/[\s-]/g, "").length < 9
+                    }
+                >
+                    {!isLoading && <span className={s.text}>zapłać</span>}
+                    {isLoading && <Spinner></Spinner>}
+                </button>
             </div>
         </div>
     );
