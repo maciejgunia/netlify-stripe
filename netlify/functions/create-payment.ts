@@ -38,8 +38,7 @@ export const handler: Handler = async (event) => {
                 quantity: 1
             })),
             shipping_rates: [shipping],
-            // payment_method_types: ["card", "p24"],
-            payment_method_types: ["card"],
+            payment_method_types: ["card", "p24"],
             phone_number_collection: {
                 enabled: true
             },
