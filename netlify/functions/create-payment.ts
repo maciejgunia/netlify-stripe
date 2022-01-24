@@ -7,7 +7,7 @@ let shipping;
 
 if (isDev) {
     stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
-    shipping = "shr_1JgUVJHZVIGpqCDJVpsyQ5Cr";
+    shipping = "shr_1KLXtzKDt2gO4ctBjcbALgaw";
 } else {
     stripe = require("stripe")(process.env.STRIPE_SECRET_LIVE);
     shipping = "shr_1JqjxTKDt2gO4ctBZWxzyru9";
@@ -27,11 +27,13 @@ export const handler: Handler = async (event) => {
 
     let items: { priceId: string }[];
     let deliveryPoint: string;
+    let phone: string;
     let session;
 
     try {
         items = JSON.parse(event.body).items;
         deliveryPoint = JSON.parse(event.body).deliveryPoint;
+        phone = JSON.parse(event.body).phone;
         session = await stripe.checkout.sessions.create({
             line_items: items.map((item) => ({
                 price: item.priceId,
@@ -40,14 +42,11 @@ export const handler: Handler = async (event) => {
             shipping_rates: [shipping],
             // payment_method_types: ["card", "p24"],
             payment_method_types: ["card"],
-            phone_number_collection: {
-                enabled: true
-            },
             mode: "payment",
             success_url: `${baseUrl}/success`,
             cancel_url: `${baseUrl}/cancel`,
             payment_intent_data: {
-                metadata: { paczkomat: deliveryPoint }
+                metadata: { paczkomat: deliveryPoint, telefon: phone }
             }
         });
     } catch (e) {

@@ -18,10 +18,11 @@ export const Cart: FC = () => {
     const products = useContext(ProductContext);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const cartItems = state
+    const items = state
         .map((id) => products.find((product) => product.priceId === id))
         .filter((product) => product !== undefined);
     const [deliveryPoint, setDeliveryPoint] = useState("");
+    const [phone, setPhone] = useState("");
 
     useEffect(() => {
         window.onload = function () {
@@ -39,7 +40,7 @@ export const Cart: FC = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ items: cartItems, deliveryPoint })
+            body: JSON.stringify({ items, deliveryPoint, phone })
         })
             .then(async (res) => {
                 return res.json();
@@ -68,10 +69,10 @@ export const Cart: FC = () => {
             </span>
             <div className={s.wrapper}>
                 <h2 className={s.header}>Koszyk</h2>
-                {cartItems.length === 0 && <p>Brak produktów w koszyku</p>}
-                {cartItems.length > 0 && (
+                {items.length === 0 && <p>Brak produktów w koszyku</p>}
+                {items.length > 0 && (
                     <ul className={s.list}>
-                        {cartItems.map(
+                        {items.map(
                             (product) =>
                                 product && (
                                     <li key={product.priceId} className={s.item}>
@@ -92,8 +93,24 @@ export const Cart: FC = () => {
                         )}
                     </ul>
                 )}
-                <div id="easypack-widget" style={{ display: cartItems.length === 0 ? "none" : "block" }}></div>
-                {cartItems.length > 0 && deliveryPoint.length > 0 && (
+                <input
+                    className={s.phoneInput}
+                    type="text"
+                    name="phone"
+                    placeholder="Podaj numer telefonu"
+                    value={phone}
+                    onChange={(e) => {
+                        if (!/[^0-9\s-]/.test(e.target.value)) {
+                            setPhone(e.target.value);
+                        }
+
+                        if (e.target.value === "") {
+                            setPhone("");
+                        }
+                    }}
+                />
+                <div id="easypack-widget" style={{ display: items.length === 0 ? "none" : "block" }}></div>
+                {items.length > 0 && deliveryPoint.length > 0 && phone.replace(/[\s-]/g, "").length >= 9 && (
                     <button onClick={createPayment} className={s.payButton}>
                         {!isLoading && <span className={s.text}>zapłać</span>}
                         {isLoading && <Spinner></Spinner>}
