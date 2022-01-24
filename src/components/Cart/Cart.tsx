@@ -93,36 +93,36 @@ export const Cart: FC = () => {
                         )}
                     </ul>
                 )}
-                <p>Dane do Paczkomatu InPost:</p>
-                <input
-                    className={s.phoneInput}
-                    type="text"
-                    name="phone"
-                    placeholder="Podaj numer telefonu"
-                    value={phone}
-                    style={{ display: items.length === 0 ? "none" : "block" }}
-                    onChange={(e) => {
-                        if (!/[^0-9\s-]/.test(e.target.value)) {
-                            setPhone(e.target.value);
-                        }
+                <div style={{ display: items.length === 0 ? "none" : "block" }}>
+                    <p>Dane do Paczkomatu InPost:</p>
+                    <input
+                        className={s.phoneInput}
+                        type="text"
+                        name="phone"
+                        placeholder="Podaj numer telefonu"
+                        value={phone}
+                        onChange={(e) => {
+                            if (!/[^0-9\s-]/.test(e.target.value)) {
+                                setPhone(e.target.value);
+                            }
 
-                        if (e.target.value === "") {
-                            setPhone("");
+                            if (e.target.value === "") {
+                                setPhone("");
+                            }
+                        }}
+                    />
+                    <div id="easypack-widget"></div>
+                    <button
+                        onClick={createPayment}
+                        className={s.payButton}
+                        disabled={
+                            items.length === 0 || deliveryPoint.length === 0 || phone.replace(/[\s-]/g, "").length < 9
                         }
-                    }}
-                />
-                <div id="easypack-widget" style={{ display: items.length === 0 ? "none" : "block" }}></div>
-                <button
-                    onClick={createPayment}
-                    className={s.payButton}
-                    style={{ display: items.length === 0 ? "none" : "block" }}
-                    disabled={
-                        items.length === 0 || deliveryPoint.length === 0 || phone.replace(/[\s-]/g, "").length < 9
-                    }
-                >
-                    {!isLoading && <span className={s.text}>zapłać</span>}
-                    {isLoading && <Spinner></Spinner>}
-                </button>
+                    >
+                        {!isLoading && <span className={s.text}>zapłać</span>}
+                        {isLoading && <Spinner></Spinner>}
+                    </button>
+                </div>
             </div>
         </div>
     );
