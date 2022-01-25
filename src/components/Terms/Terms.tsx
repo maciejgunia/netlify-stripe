@@ -96,16 +96,21 @@ const Terms: FC = () => {
                 3.4. Utrwalenie, zabezpieczenie oraz udostępnienie Klientowi treści zawieranej Umowy Sprzedaży następuje
                 poprzez (1) udostępnienie niniejszego Regulaminu na stronie Sklepu Internetowego oraz (2) przesłanie
                 Klientowi wiadomości e-mail, o której mowa w pkt. 3.3.2. Regulaminu. Treść Umowy Sprzedaży jest
-                dodatkowo utrwalona i zabezpieczona w systemie informatycznym Sklepu Internetowego Sprzedawcy. 4.
-                SPOSOBY I TERMINY PŁATNOŚCI ZA PRODUKT 4.1. Sprzedawca udostępnia Klientowi następujące sposoby
-                płatności z tytułu Umowy Sprzedaży: Płatność elektroniczna za pomocą usługi GooglePay oraz płatność
-                kartą płatniczą. Płatności elektroniczne i płatności kartą płatniczą za pośrednictwem serwisu
-                Przelewy24.pl – możliwe aktualne sposoby płatności określone są na stronie Sklepu Internetowego w
-                zakładce informacyjnej dotyczącej sposobów płatności oraz na stronie internetowej http://przelewy24.pl.
-                4.1.3.1.1.02: Przelewy24 (DialCom24 Sp. z o.o., ul. Kanclerska 15, 60-327 Poznań). 4.2. Termin
-                płatności: W przypadku wyboru przez Klienta płatności elektronicznych albo płatności kartą płatniczą,
-                Klient obowiązany jest do dokonania płatności w terminie 3 dni kalendarzowych od dnia zawarcia Umowy
-                Sprzedaży.
+                dodatkowo utrwalona i zabezpieczona w systemie informatycznym Sklepu Internetowego Sprzedawcy.
+            </p>
+            <h3>4. SPOSOBY I TERMINY PŁATNOŚCI ZA PRODUKT</h3>
+            <p>
+                4.1. Sprzedawca udostępnia Klientowi następujące sposoby płatności z tytułu Umowy Sprzedaży: Płatność
+                elektroniczna za pomocą usługi GooglePay oraz płatność kartą płatniczą. Płatności elektroniczne i
+                płatności kartą płatniczą za pośrednictwem serwisu Przelewy24.pl – możliwe aktualne sposoby płatności
+                określone są na stronie Sklepu Internetowego w zakładce informacyjnej dotyczącej sposobów płatności oraz
+                na stronie internetowej http://przelewy24.pl. 4.1.3.1.1.02: Przelewy24 (DialCom24 Sp. z o.o., ul.
+                Kanclerska 15, 60-327 Poznań).
+            </p>
+            <p>
+                4.2. Termin płatności: W przypadku wyboru przez Klienta płatności elektronicznych albo płatności kartą
+                płatniczą, Klient obowiązany jest do dokonania płatności w terminie 3 dni kalendarzowych od dnia
+                zawarcia Umowy Sprzedaży.
             </p>
             <h3>5. KOSZT, SPOSOBY I TERMIN DOSTAWY ORAZ ODBIORU PRODUKTU</h3>
             <p>
