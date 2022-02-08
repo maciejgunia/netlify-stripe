@@ -17,14 +17,16 @@ export const Product: FC = () => {
             </div>
             <div className={s.description}>
                 <h2>{product?.name}</h2>
-                {offers.map((offer) => (
-                    <div key={offer.priceId}>
-                        <p>
-                            {offer.nickname} / {offer.price}
-                        </p>
-                        <Button id={offer.priceId}></Button>
-                    </div>
-                ))}
+                {offers
+                    .sort((a, b) => (a < b ? 1 : -1))
+                    .map((offer) => (
+                        <div key={offer.priceId}>
+                            <p>
+                                {offer.nickname} / {offer.price}
+                            </p>
+                            <Button id={offer.priceId}></Button>
+                        </div>
+                    ))}
             </div>
         </div>
     ) : (
