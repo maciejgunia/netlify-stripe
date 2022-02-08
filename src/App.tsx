@@ -10,6 +10,10 @@ import { getProductsUrl } from "./environment";
 import { Product } from "./views/Product/Product";
 import { CartAction, CartContext, CART_STORAGE_LABEL, initialCartValue, reducer } from "./helpers/cart";
 import { ProductContext, ProductData } from "./helpers/product";
+import Terms from "./components/Terms/Terms";
+import Returns from "./components/Returns/Returns";
+import Privacy from "./components/Privacy/Privacy";
+import Contact from "./components/Contact/Contact";
 
 export const App: FC = () => {
     const [cartState, dispatch] = useReducer<Reducer<string[], CartAction>>(reducer, initialCartValue);
@@ -58,6 +62,18 @@ export const App: FC = () => {
                                 </Route>
                                 <Route path="/cancel">
                                     <Cancel></Cancel>
+                                </Route>
+                                <Route path="/regulamin">
+                                    <Terms></Terms>
+                                </Route>
+                                <Route path="/zwroty">
+                                    <Returns></Returns>
+                                </Route>
+                                <Route path="/prywatnosc">
+                                    <Privacy></Privacy>
+                                </Route>
+                                <Route path="/kontakt">
+                                    <Contact></Contact>
                                 </Route>
                                 <Route path="404" render={() => <>Not found</>} />
                                 <Route path="*" render={() => <>Not found</>} />

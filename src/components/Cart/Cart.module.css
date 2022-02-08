@@ -70,6 +70,12 @@
     text-transform: uppercase;
 }
 
+.payButton[disabled] {
+    pointer-events: none;
+    pointer: default;
+    opacity: 0.5;
+}
+
 .backdrop {
     position: fixed;
     width: 100vw;
@@ -85,4 +91,13 @@
 .open .backdrop {
     opacity: 0.85;
     pointer-events: all;
+}
+
+.phoneInput {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
 }

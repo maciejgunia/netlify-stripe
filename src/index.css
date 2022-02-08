@@ -15,7 +15,12 @@ body,
     flex-direction: column;
 }
 
+li {
+    margin-bottom: 8px;
+}
+
 body {
+    line-height: 1.4;
     overflow-x: hidden;
     margin: 0;
     color: var(--c-text);
@@ -23,6 +28,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--c-text);
+}
+
+h2 {
+    margin-block-start: 0;
 }
 
 #content {

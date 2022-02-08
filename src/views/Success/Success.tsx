@@ -13,7 +13,7 @@ export const Success: FC = () => {
         <div className="container">
             <Message
                 header="Zamówienie złożone!"
-                body="Dziekujemy za złożenie zamównienia. Wkrótce otrzymasz informację odnośnie terminu dostawy."
+                body="Dziękujemy za złożenie zamównienia. Twpje zamówienie zostanie wkrótce wysłane."
             ></Message>
         </div>
     );

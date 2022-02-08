@@ -7,6 +7,12 @@
 }
 
 .link {
+    display: inline-block;
     color: white;
-    margin: 0 5px;
+    margin: 5px;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
