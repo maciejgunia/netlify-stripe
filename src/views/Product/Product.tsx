@@ -18,7 +18,7 @@ export const Product: FC = () => {
             <div className={s.description}>
                 <h2>{product?.name}</h2>
                 {offers
-                    .sort((a, b) => (a < b ? 1 : -1))
+                    .sort((a, b) => (a.price < b.price ? 1 : -1))
                     .map((offer) => (
                         <div key={offer.priceId}>
                             <p>
