@@ -10,7 +10,7 @@ if (isDev) {
     shipping = "shr_1KLXtzKDt2gO4ctBjcbALgaw";
 } else {
     stripe = require("stripe")(process.env.STRIPE_SECRET_LIVE);
-    shipping = "shr_1KLouGKDt2gO4ctBmuZZBSHj";
+    shipping = "shr_1Kw7X4KDt2gO4ctBKsWO8QyO";
 }
 
 export const handler: Handler = async (event) => {
