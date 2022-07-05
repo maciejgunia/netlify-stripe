@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn data && react-scripts build",
     "data": "node ./src/fetchProducts.js",
+    "serve": "npx serve -s build",
     "dev": "netlify dev",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

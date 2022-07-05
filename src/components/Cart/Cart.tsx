@@ -128,8 +128,8 @@ export const Cart: FC = () => {
               phone.replace(/[\s-]/g, "").length < 9
             }
           >
-            {isLoading && <span className={s.text}>zapłać</span>}
-            {!isLoading && <Spinner></Spinner>}
+            {!isLoading && <span className={s.text}>zapłać</span>}
+            {isLoading && <Spinner></Spinner>}
           </button>
         </div>
       </div>
