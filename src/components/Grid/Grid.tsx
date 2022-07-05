@@ -1,28 +1,26 @@
-import { FC, useContext, useEffect, useState } from "react";
-import { ProductContext, ProductData } from "../../helpers/product";
+import { FC } from "react";
+import { ProductData } from "../../helpers/product";
 import { ProductTile } from "../ProductTile/ProductTile";
 import s from "./Grid.module.css";
 
+import data from "../../data/products.json";
+
 export const Grid: FC = () => {
-    const allProducts = useContext(ProductContext);
-    const [products, setProducts] = useState<ProductData[]>([]);
+  const products = (data as unknown as ProductData[]).reduce(
+    (acc: any[], curr: ProductData) => {
+      if (acc.some((i) => i.id === curr.id)) {
+        return acc;
+      }
+      return [...acc, curr];
+    },
+    []
+  );
 
-    useEffect(() => {
-        setProducts(
-            allProducts.reduce((acc: any[], curr: ProductData) => {
-                if (acc.some((i) => i.id === curr.id)) {
-                    return acc;
-                }
-                return [...acc, curr];
-            }, [])
-        );
-    }, [allProducts]);
-
-    return (
-        <div className={s.grid}>
-            {products.map((product) => (
-                <ProductTile key={product.priceId} data={product}></ProductTile>
-            ))}
-        </div>
-    );
+  return (
+    <div className={s.grid}>
+      {products.map((product) => (
+        <ProductTile key={product.priceId} data={product}></ProductTile>
+      ))}
+    </div>
+  );
 };
