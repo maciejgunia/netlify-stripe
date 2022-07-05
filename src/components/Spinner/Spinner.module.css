@@ -1,75 +1,75 @@
 /* credit: https://projects.lukehaas.me/css-loaders/ */
 .wrapper {
-    --dot-size: 10px;
-    --offset: -10px;
-    position: relative;
+  --dot-size: 10px;
+  --offset: -10px;
+  position: relative;
 }
 
 .spinner {
-    position: absolute;
-    top: var(--offset);
+  position: absolute;
+  top: var(--offset);
 }
 
 .spinner,
 .spinner:before,
 .spinner:after {
-    border-radius: 50%;
-    width: var(--dot-size);
-    height: var(--dot-size);
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation: load7 1.8s infinite ease-in-out;
-    animation: load7 1.8s infinite ease-in-out;
+  border-radius: 50%;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
 }
 
 .spinner {
-    color: #333333;
-    font-size: 10px;
-    margin: 0 auto;
-    position: relative;
-    text-indent: -9999em;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
+  color: var(--c-background);
+  font-size: 10px;
+  margin: 0 auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
 }
 
 .spinner:before,
 .spinner:after {
-    content: "";
-    position: absolute;
-    top: 0;
+  content: "";
+  position: absolute;
+  top: 0;
 }
 
 .spinner:before {
-    left: var(--offset);
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
+  left: var(--offset);
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
 }
 
 .spinner:after {
-    left: var(--dot-size);
+  left: var(--dot-size);
 }
 
 @-webkit-keyframes load7 {
-    0%,
-    80%,
-    100% {
-        box-shadow: 0 var(--dot-size) 0 -1.3em;
-    }
-    40% {
-        box-shadow: 0 var(--dot-size) 0 0;
-    }
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 var(--dot-size) 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 var(--dot-size) 0 0;
+  }
 }
 
 @keyframes load7 {
-    0%,
-    80%,
-    100% {
-        box-shadow: 0 var(--dot-size) 0 -1.3em;
-    }
-    40% {
-        box-shadow: 0 var(--dot-size) 0 0;
-    }
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 var(--dot-size) 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 var(--dot-size) 0 0;
+  }
 }
