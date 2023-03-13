@@ -22,6 +22,7 @@ const fetchProducts = async () => {
           name: product.name,
           priceId: price.id,
           price: `${price.unit_amount / 100} ${price.currency.toUpperCase()}`,
+          amount: price.unit_amount,
           nickname: price.nickname,
           images: product.images,
           slug: product.name
